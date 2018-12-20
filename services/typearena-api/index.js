@@ -1,11 +1,10 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const config = require('./config/config')
 
-app.listen(config.PORT, () => {
-    console.log(`Listening on port ${config.PORT}`);
+app.listen(8000, () => {
+    console.log(`Listening on port 8000`);
 });
 
 app.get('/', (req, res) => {
-    res.send('Hello world!');
+    res.send('Hello world!!');
 });
