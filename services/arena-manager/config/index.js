@@ -1,5 +1,5 @@
 const config = {
-    PORT: 8000
+    PORT: 8001
 }
 
 export default config;

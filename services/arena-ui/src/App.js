@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Home } from './components/pages/Home';
-import { Arena } from './components/pages/Arena';
+import { Home } from 'components/pages/Home';
+import { Arena } from 'components/pages/Arena';
 
 class App extends Component {
   render() {

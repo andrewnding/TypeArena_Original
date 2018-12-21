@@ -7,6 +7,13 @@
         width: 60vw;
         height: 30px;
         margin-left: (100vw - $width) / 2;
+
+        .textbox {
+            font-size: 1.2em;
+            line-height: 1.3em;
+            margin-bottom: 20px;
+        }
+
         .input {
             @at-root #{&}--arena {
                 width: 100%;
@@ -14,7 +21,5 @@
                 font-size: 24px;
             }
         }
-
-        
     }
 }

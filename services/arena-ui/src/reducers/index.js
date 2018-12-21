@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import simpleReducer from './simpleReducer';
+import arena from 'reducers/arena';
 
 export default combineReducers({
-    simpleReducer
+    arena
 });

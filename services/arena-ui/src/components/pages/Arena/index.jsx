@@ -1,4 +1,4 @@
-import Arena from './Arena';
+import Arena from 'components/pages/Arena/Arena';
 
 export {
     Arena

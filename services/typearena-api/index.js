@@ -1,8 +1,10 @@
 import express from 'express';
+import config from './config/index.js';
+
 const app = express();
 
-app.listen(8000, () => {
-    console.log(`Listening on port 8000`);
+app.listen(config.PORT, () => {
+    console.log(`Listening on port ${config.PORT}`);
 });
 
 app.get('/', (req, res) => {

@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import InputBar from './InputBar';
-import TextBox from './TextBox';
+import InputBar from 'components/pages/Arena/InputBar';
+import TextBox from 'components/pages/Arena/TextBox';
 
-import { updateInput, fetchTextBoxText } from '../../../actions/arena';
+import { updateInput, fetchTextBoxText } from 'actions/arena';
 
 const mapStateToProps = state => ({
-    inputText: state.inputText,
-    textBoxText: state.textBoxText,
+    inputText: state.arena.inputText,
+    textBoxText: state.arena.textBoxText,
 });
 
 const mapDispatchToProps = dispatch => ({

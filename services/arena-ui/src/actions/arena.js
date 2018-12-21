@@ -26,8 +26,9 @@ export const errorTextBoxText = (e) => ({
 export const fetchTextBoxText = () => {
     return dispatch => {
         dispatch(fetchingTextBoxText());
-        return fetch('/get_arena_text')
-            .then(response => {console.log(response); return dispatch(successTextBoxText(response))})
+        return fetch('/api/get_arena_text')
+            .then(response => response.json())
+            .then(response => dispatch(successTextBoxText(response.text)))
             .catch(e => dispatch(errorTextBoxText(e)));
     }
 }

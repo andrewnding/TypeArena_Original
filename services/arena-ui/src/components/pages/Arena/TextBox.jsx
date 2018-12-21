@@ -3,12 +3,12 @@ import React from 'react';
 export default class TextBox extends React.Component {
     render() {
         const {
-            textBoxText,
+            value,
         } = this.props;
 
         return (
-            <div>
-                {textBoxText}
+            <div className="textbox">
+                {value}
             </div>
         );
     }
