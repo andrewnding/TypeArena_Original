@@ -14,6 +14,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "concurrently \"npm run start\" \"cd ../arena-manager npm run dev\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -29,5 +30,6 @@
   ],
   "devDependencies": {
     "jest": "^23.6.0"
-  }
+  },
+  "proxy": "http://localhost:8000/"
 }

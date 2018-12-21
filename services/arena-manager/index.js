@@ -10,3 +10,7 @@ app.listen(config.PORT, () => {
 app.get('/', (req, res) => {
     res.send('Hello world!!');
 });
+
+app.get('/get_arena_text', (req, res) => {
+    res.send('Getting Arena Text From API');
+});
