@@ -28,6 +28,7 @@ module.exports = {
             actions: path.resolve(__dirname, 'src/actions/'),
             reducers: path.resolve(__dirname, 'src/reducers/'),
             store: path.resolve(__dirname, 'src/store/'),
+            utils: path.resolve(__dirname, 'src/utils/'),
         },
         extensions: ['.js', '.jsx', '.json']
     },

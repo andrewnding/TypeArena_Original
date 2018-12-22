@@ -9,6 +9,9 @@ import { updateInput, fetchTextBoxText } from 'actions/arena';
 const mapStateToProps = state => ({
     inputText: state.arena.inputText,
     textBoxText: state.arena.textBoxText,
+    currentWordStartIndex: state.arena.currentWordStartIndex,
+    currentWordCompleteIndex: state.arena.currentWordCompleteIndex,
+    currentIndex: state.arena.currentIndex,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -29,11 +32,20 @@ class ArenaContainer extends React.Component {
         const {
             inputText,
             textBoxText,
+            currentWordStartIndex,
+            currentWordCompleteIndex,
+            currentIndex
         } = this.props;
 
         return (
             <div className="arena-container">
-                <TextBox value={textBoxText} />
+                <TextBox
+                    currentInput={inputText}
+                    value={textBoxText}
+                    currentWordStartIndex={currentWordStartIndex}
+                    currentWordCompleteIndex={currentWordCompleteIndex}
+                    currentIndex={currentIndex}
+                />
                 <InputBar value={inputText} onChange={(e) => this.updateInputHandler(e)} />
             </div>
         );

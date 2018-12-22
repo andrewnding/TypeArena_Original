@@ -12,6 +12,18 @@
             font-size: 1.2em;
             line-height: 1.3em;
             margin-bottom: 20px;
+
+            @at-root #{&}--completed {
+                color: green;
+            }
+
+            @at-root #{&}--incorrect {
+                color: red;
+            }
+
+            @at-root #{&}--current-word {
+                border-bottom: 2px solid black;
+            }
         }
 
         .input {
