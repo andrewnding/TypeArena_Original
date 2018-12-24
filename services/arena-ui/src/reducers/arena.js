@@ -23,7 +23,7 @@ export default (state = INITIAL_VALUES, action) => {
 
             // Check if the current word is correct and we are on the last word
             if (inputText === currentWord && state.textBoxText.indexOf(' ', state.currentWordStartIndex) === -1) {
-                alert('done')
+                console.log('done')
             }
 
             // If last letter was space and the input words matches the current word, move on to next word
@@ -71,10 +71,6 @@ export const indexOfDifference = (s1, s2) => {
         if (s1[i] !== s2[i]) {
             return i
         }
-    }
-
-    if (s2.length > s1.length) {
-        return s1.length
     }
 
     return s1.length;
