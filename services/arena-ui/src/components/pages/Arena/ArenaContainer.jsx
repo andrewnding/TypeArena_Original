@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import InputBar from 'components/pages/Arena/InputBar';
 import TextBox from 'components/pages/Arena/TextBox';
@@ -10,7 +11,6 @@ const mapStateToProps = state => ({
     inputText: state.arena.inputText,
     textBoxText: state.arena.textBoxText,
     currentWordStartIndex: state.arena.currentWordStartIndex,
-    currentWordCompleteIndex: state.arena.currentWordCompleteIndex,
     currentIndex: state.arena.currentIndex,
 });
 
@@ -33,8 +33,7 @@ class ArenaContainer extends React.Component {
             inputText,
             textBoxText,
             currentWordStartIndex,
-            currentWordCompleteIndex,
-            currentIndex
+            currentIndex,
         } = this.props;
 
         return (
@@ -43,10 +42,16 @@ class ArenaContainer extends React.Component {
                     currentInput={inputText}
                     value={textBoxText}
                     currentWordStartIndex={currentWordStartIndex}
-                    currentWordCompleteIndex={currentWordCompleteIndex}
                     currentIndex={currentIndex}
                 />
-                <InputBar value={inputText} onChange={(e) => this.updateInputHandler(e)} />
+                <InputBar
+                    className={classNames(
+                        'input--arena',
+                        { 'input--arena__danger': inputText.length !== (currentIndex - currentWordStartIndex) }
+                    )}
+                    value={inputText}
+                    onChange={(e) => this.updateInputHandler(e)}
+                />
             </div>
         );
     }

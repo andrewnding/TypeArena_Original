@@ -16,17 +16,13 @@ export default class TextBox extends React.Component {
         const {
             value,
             currentWordStartIndex,
-            currentWordCompleteIndex,
             currentIndex,
         } = this.props;
 
         return (
             <span className="textbox--current-word">
                 <span className="textbox--completed">
-                    {value.slice(currentWordStartIndex, currentWordCompleteIndex)}
-                </span>
-                <span className="textbox--incorrect">
-                    {value.slice(currentWordCompleteIndex, currentIndex)}
+                    {value.slice(currentWordStartIndex, currentIndex)}
                 </span>
                 <span>
                     {getWordStartingAtIndex(value, currentIndex)}
