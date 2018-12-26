@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "webpack & nodemon dist/index.bundle.js",
+    "start": "webpack & nodemon dist/index.bundle.js",
     "build": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
