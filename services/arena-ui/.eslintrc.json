@@ -1,0 +1,9 @@
+{
+    "extends": "eslint:recommended",
+    "rules": {
+      "react-hooks/rules-of-hooks": "error"
+    },
+    "plugins": [
+      "react-hooks"
+    ]
+  }
