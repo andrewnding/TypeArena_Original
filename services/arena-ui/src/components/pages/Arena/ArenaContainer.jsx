@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
@@ -19,42 +19,42 @@ const mapDispatchToProps = dispatch => ({
     fetchTextBoxText: () => { dispatch(fetchTextBoxText()) }
 });
 
-class ArenaContainer extends React.Component {
-    componentDidMount() {
-        this.props.fetchTextBoxText();
+const ArenaContainer = props => {
+    const {
+        inputText,
+        textBoxText,
+        currentWordStartIndex,
+        currentIndex,
+        fetchTextBoxText,
+        updateInput,
+    } = props;
+
+    useEffect(() => {
+        fetchTextBoxText();
+    }, []);
+
+    const updateInputHandler = e => {
+        updateInput(e.target.value);
     }
 
-    updateInputHandler(e) {
-        this.props.updateInput(e.target.value);
-    }
-
-    render() {
-        const {
-            inputText,
-            textBoxText,
-            currentWordStartIndex,
-            currentIndex,
-        } = this.props;
-
-        return (
-            <div className="arena-container">
-                <TextBox
-                    currentInput={inputText}
-                    value={textBoxText}
-                    currentWordStartIndex={currentWordStartIndex}
-                    currentIndex={currentIndex}
-                />
-                <InputBar
-                    className={classNames(
-                        'input--arena',
-                        { 'input--arena__danger': inputText.length !== (currentIndex - currentWordStartIndex) }
-                    )}
-                    value={inputText}
-                    onChange={(e) => this.updateInputHandler(e)}
-                />
-            </div>
-        );
-    }
+    return (
+        <div className="arena-container">
+            <TextBox
+                currentInput={inputText}
+                value={textBoxText}
+                currentWordStartIndex={currentWordStartIndex}
+                currentIndex={currentIndex}
+            />
+            <InputBar
+                className={classNames(
+                    'input--arena',
+                    { 'input--arena__danger': inputText.length !== (currentIndex - currentWordStartIndex) }
+                )}
+                value={inputText}
+                onChange={(e) => updateInputHandler(e)}
+            />
+        </div>
+    );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArenaContainer)

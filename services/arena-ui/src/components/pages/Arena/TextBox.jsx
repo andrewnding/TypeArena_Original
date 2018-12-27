@@ -2,22 +2,22 @@ import React from 'react';
 
 import { getWordStartingAtIndex } from 'utils/stringHelpers';
 
-export default class TextBox extends React.Component {
-    getCompletedText() {
+const TextBox = props => {
+    const getCompletedText = () => {
         const {
             value,
             currentWordStartIndex,
-        } = this.props;
+        } = props;
 
         return value.slice(0, currentWordStartIndex);
     }
 
-    getCurrentWord() {
+    const getCurrentWord = () => {
         const {
             value,
             currentWordStartIndex,
             currentIndex,
-        } = this.props;
+        } = props;
 
         return (
             <span className="textbox--current-word">
@@ -31,11 +31,11 @@ export default class TextBox extends React.Component {
         )
     }
 
-    getRemainingText() {
+    const getRemainingText = () => {
         const {
             value,
             currentWordStartIndex,
-        } = this.props;
+        } = props;
         const spaceIndex = value.indexOf(' ', currentWordStartIndex);
 
         if (spaceIndex === -1) {
@@ -45,21 +45,22 @@ export default class TextBox extends React.Component {
         return value.slice(value.indexOf(' ', currentWordStartIndex));
     }
 
-    renderText() {
+    const renderText = () => {
         return (
             <div>
-                <span className="textbox--completed">{this.getCompletedText()}</span>
-                <span className="textbox--current-word">{this.getCurrentWord()}</span>
-                {this.getRemainingText()}
+                <span className="textbox--completed">{getCompletedText()}</span>
+                <span className="textbox--current-word">{getCurrentWord()}</span>
+                {getRemainingText()}
             </div>
         )
     }
 
-    render() {
-        return (
-            <div className="textbox">
-                {this.renderText()}
-            </div>
-        );
-    }
+    
+    return (
+        <div className="textbox">
+            {renderText()}
+        </div>
+    );
 }
+
+export default TextBox;
