@@ -1,4 +1,4 @@
-import { ARENA_UPDATE_INPUT, SUCCESS_TEXT_BOX_TEXT } from 'actions/arena';
+import { ARENA_UPDATE_INPUT, SUCCESS_TEXT_BOX_TEXT, TIMER_START, TIMER_TICK, TIMER_STOP } from 'actions/arena';
 import { getWordStartingAtIndex } from 'utils/stringHelpers';
 
 export const INITIAL_VALUES = {
@@ -6,6 +6,9 @@ export const INITIAL_VALUES = {
     textBoxText: '',
     currentWordStartIndex: 0,
     currentIndex: 0,
+    status: 'WAITING',
+    timerId: null,
+    timerTime: 0,
 }
 
 export default (state = INITIAL_VALUES, action) => {
@@ -22,10 +25,11 @@ export default (state = INITIAL_VALUES, action) => {
 
             // Check if the current word is correct and we are on the last word
             if (inputText === currentWord && state.textBoxText.indexOf(' ', state.currentWordStartIndex) === -1) {
-                console.log('done')
                 return {
                     ...state,
                     inputText,
+                    currentIndex: state.currentIndex + 1,
+                    status: 'DONE',
                 }
             }
 
@@ -35,7 +39,8 @@ export default (state = INITIAL_VALUES, action) => {
                     ...state,
                     inputText: '',
                     currentWordStartIndex: state.currentIndex + 1,
-                    currentIndex: state.currentIndex + 1,                    
+                    currentIndex: state.currentIndex + 1,
+                    status: 'RUNNING',
                 }
             }
 
@@ -47,6 +52,7 @@ export default (state = INITIAL_VALUES, action) => {
                 return {
                     ...state,
                     inputText,
+                    status: 'RUNNING',
                 }
             }
 
@@ -54,11 +60,28 @@ export default (state = INITIAL_VALUES, action) => {
                 ...state,
                 inputText,
                 currentIndex: state.currentWordStartIndex + diffIndex,
+                status: 'RUNNING',
             }
         case SUCCESS_TEXT_BOX_TEXT:
             return {
                 ...state,
                 textBoxText: action.payload,
+            }
+        case TIMER_START:
+            return {
+                ...state,
+                timerId: action.payload,
+                timerTime: 0,
+            }
+        case TIMER_TICK:
+            return {
+                ...state,
+                timerTime: state.timerTime + 1,
+            }
+        case TIMER_STOP:
+            return {
+                ...state,
+                timerId: null,
             }
         default:
             return state

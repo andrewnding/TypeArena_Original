@@ -4,19 +4,25 @@ import classNames from 'classnames';
 
 import InputBar from 'components/pages/Arena/InputBar';
 import TextBox from 'components/pages/Arena/TextBox';
+import Timer from 'components/pages/Arena/Timer';
 
-import { updateInput, fetchTextBoxText } from 'actions/arena';
+import { updateInput, fetchTextBoxText, startTimer, stopTimer } from 'actions/arena';
 
 const mapStateToProps = state => ({
     inputText: state.arena.inputText,
     textBoxText: state.arena.textBoxText,
     currentWordStartIndex: state.arena.currentWordStartIndex,
     currentIndex: state.arena.currentIndex,
+    status: state.arena.status,
+    timerId: state.arena.timerId,
+    timerTime: state.arena.timerTime,
 });
 
 const mapDispatchToProps = dispatch => ({
     updateInput: text => { dispatch(updateInput(text)) },
-    fetchTextBoxText: () => { dispatch(fetchTextBoxText()) }
+    fetchTextBoxText: () => { dispatch(fetchTextBoxText()) },
+    startTimer: () => { dispatch(startTimer()) },
+    stopTimer: timerId => { dispatch(stopTimer(timerId)) },
 });
 
 const ArenaContainer = props => {
@@ -25,13 +31,33 @@ const ArenaContainer = props => {
         textBoxText,
         currentWordStartIndex,
         currentIndex,
+        status,
+        timerId,
+        timerTime,
         fetchTextBoxText,
         updateInput,
+        startTimer,
+        stopTimer,
     } = props;
 
     useEffect(() => {
         fetchTextBoxText();
+
+        return () => {
+            if (timerId !== null)  {
+                stopTimer(timerId);
+            }
+        }
     }, []);
+
+    useEffect(() => {
+        if (status === 'RUNNING') {
+            startTimer()
+        }
+        if (status === 'DONE') {
+            stopTimer(timerId)
+        }
+    }, [status])
 
     const updateInputHandler = e => {
         updateInput(e.target.value);
@@ -39,6 +65,13 @@ const ArenaContainer = props => {
 
     return (
         <div className="arena-container">
+            <Timer
+                className={classNames(
+                    'timer--arena',
+                    { 'timer--arena__success': status === 'RUNNING' }
+                )}
+                seconds={timerTime}
+            />
             <TextBox
                 currentInput={inputText}
                 value={textBoxText}
@@ -52,6 +85,7 @@ const ArenaContainer = props => {
                 )}
                 value={inputText}
                 onChange={(e) => updateInputHandler(e)}
+                disabled={status === 'DONE'}
             />
         </div>
     );

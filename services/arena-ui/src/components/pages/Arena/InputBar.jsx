@@ -6,6 +6,7 @@ const InputBar = props => {
         className,
         value,
         onChange,
+        disabled,
     } = props;
     
     return (
@@ -17,6 +18,7 @@ const InputBar = props => {
                 )}
                 value={value}
                 onChange={(e) => onChange(e)}
+                disabled={disabled}
             />
         </div>
     )
