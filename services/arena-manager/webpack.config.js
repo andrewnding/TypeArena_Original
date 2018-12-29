@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+var nodeExternals = require('webpack-node-externals');
+
 module.exports = {
     mode: 'development',
     entry: './index.js',
@@ -18,5 +20,6 @@ module.exports = {
     },
     watch: true,
     devtool: 'source-map',
-    target: 'node'
+    target: 'node',
+    externals: [nodeExternals()]
 };
