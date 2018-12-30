@@ -23,7 +23,7 @@ app.get('/get_arena_text', (req, res) => {
 io.on('connection', client => {
     console.log('a user connected')
 
-    client.on('updateInputSocket', text => {
-        console.log('updatingInputSocket', text)
+    client.on('completeWord', text => {
+        console.log('completing word', text)
     })
 });

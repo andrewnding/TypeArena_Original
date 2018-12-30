@@ -1,5 +1,6 @@
 import { ARENA_UPDATE_INPUT, SUCCESS_TEXT_BOX_TEXT, TIMER_START, TIMER_TICK, TIMER_STOP } from 'actions/arena';
 import { getWordStartingAtIndex } from 'utils/stringHelpers';
+import { completeWord } from 'utils/socket';
 
 export const INITIAL_VALUES = {
     inputText: '',
@@ -25,6 +26,7 @@ export default (state = INITIAL_VALUES, action) => {
 
             // Check if the current word is correct and we are on the last word
             if (inputText === currentWord && state.textBoxText.indexOf(' ', state.currentWordStartIndex) === -1) {
+                completeWord(currentWord);
                 return {
                     ...state,
                     inputText,
@@ -35,6 +37,7 @@ export default (state = INITIAL_VALUES, action) => {
 
             // If last letter was space and the input words matches the current word, move on to next word
             if (lastLetter === ' ' && inputText === currentWord + ' ') {
+                completeWord(currentWord);
                 return {
                     ...state,
                     inputText: '',

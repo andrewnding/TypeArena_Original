@@ -7,7 +7,6 @@ import TextBox from 'components/pages/Arena/TextBox';
 import Timer from 'components/pages/Arena/Timer';
 
 import { updateInput, fetchTextBoxText, startTimer, stopTimer } from 'actions/arena';
-import { updateInputSocket } from 'utils/socket';
 
 const mapStateToProps = state => ({
     inputText: state.arena.inputText,
@@ -62,7 +61,6 @@ const ArenaContainer = props => {
 
     const updateInputHandler = e => {
         updateInput(e.target.value);
-        updateInputSocket(e.target.value)
     }
 
     return (
