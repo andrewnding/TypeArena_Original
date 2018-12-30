@@ -1,10 +1,13 @@
 import express from 'express';
 import config from 'config/index';
-import { connection } from 'middleware/sql';
+import { connectionMiddleware } from 'middleware/sql';
+import { configureTypes } from 'middleware/configureTypes';
 
 const app = express();
 
-connection.connect()
+// Middlewares
+app.use(connectionMiddleware);
+app.use(configureTypes);
 
 app.listen(config.PORT, () => {
     console.log(`Listening on port ${config.PORT}`);
@@ -12,7 +15,4 @@ app.listen(config.PORT, () => {
 
 app.get('/', (req, res) => {
     res.send('Hello world!!');
-    connection.query('select * from users', (err, rows, fields) => {
-        console.log(rows)
-    })
 });
