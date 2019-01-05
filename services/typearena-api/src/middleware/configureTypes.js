@@ -1,8 +1,8 @@
-import User from 'types/user';
+import UserStore from 'stores/userStore';
 
 export const configureTypes = (req, res, next) => {
     req.context = {
-        user: new User(res.locals.connection)
+        userStore: new UserStore(res.locals.connection)
     }
 
     next();
