@@ -1,14 +1,17 @@
 class User {
-    constructor({ id, name, email }) {
+    constructor({ id, email, username, isGuest=false }) {
         this.id = id;
-        this.name = name;
         this.email = email;
+        this.username = username;
+        this.isGuest = isGuest;
     }
 
     toJSON() {
         return {
             id: this.id,
-            name: this.name,
+            email: this.email,
+            username: this.username,
+            isGuest: this.isGuest,
         };
     }
 }

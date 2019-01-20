@@ -6,10 +6,9 @@ router.get('/user', (req, res) => {
     if (!req.user) {
         const guest = req.context.userStore.createGuest();
         req.user = guest.toJSON();
-        return res.json(guest.toJSON());
     }
 
-    res.json(req.user);
+    return res.json(req.user);
 });
 
 router.post('/user', async (req, res, next) => {
@@ -29,12 +28,13 @@ router.post('/user', async (req, res, next) => {
 
 router.post('/user/login', async (req, res, next) => {
     const {
+        email,
         username,
         passwordAttempt
     } = req.body;
 
     try {
-        const success = await req.context.userStore.canAuthenticate({ username, passwordAttempt });
+        const success = await req.context.userStore.canAuthenticate({ email, username, passwordAttempt });
         res.send(success);        
     } catch (e) {
         next(e);

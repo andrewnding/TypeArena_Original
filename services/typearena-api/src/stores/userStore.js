@@ -1,6 +1,6 @@
 import uuidv1 from 'uuid/v1';
 import { hashSecret, compareSecret } from 'utils/hash';
-import User from '../types/user';
+import User from 'types/user';
 
 class UserStore {
     constructor(sql) {
@@ -8,37 +8,41 @@ class UserStore {
     }
 
     createGuest() {
-        return new User({ id: uuidv1(), name: 'Guest' });
+        return new User({ id: uuidv1(), isGuest: true });
     }
 
     createUser({ email, username, password }) {
         const { hashedSecret, salt } = hashSecret(password);
 
         return new Promise((resolve, reject) => {
+            const id = uuidv1();
+
             this.sql.query(
                 `INSERT INTO users (id, email, username, password, salt)
-                VALUES ('${uuidv1()}', '${email}', '${username}', '${hashedSecret}', '${salt}')`,
+                VALUES ('${id}', '${email}', '${username}', '${hashedSecret}', '${salt}')`,
                 err => {
                     if (err) {
                         return reject(new Error(err));
                     }
-                    resolve(true);
+                    resolve(new User({ id, email, username }));
                 }
             )
         });
     }
 
-    canAuthenticate({ username, passwordAttempt }) {
+    canAuthenticate({ email, username, passwordAttempt }) {
+        const withEmail = !!email;
+        const query = `SELECT password, salt FROM users WHERE ${withEmail ? `email = '${email}'` : `username = '${username}'`}`;
         return new Promise((resolve, reject) => {
             this.sql.query(
-                `SELECT password, salt FROM users WHERE username = '${username}'`,
+                query,
                 (err, rows) => {
                     if (err) {
                         return reject(new Error(err));
                     }
     
                     if (!rows.length) {
-                        return reject(new Error(`User ${username} does not exist`));
+                        return reject(new Error(`${withEmail ? email : username} not found`));
                     }
     
                     resolve(compareSecret(passwordAttempt, rows[0].password, rows[0].salt))
