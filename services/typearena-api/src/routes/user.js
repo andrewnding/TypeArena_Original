@@ -1,4 +1,5 @@
 import express from 'express';
+import passport from 'passport';
 
 const router = express.Router();
 
@@ -19,26 +20,30 @@ router.post('/user', async (req, res, next) => {
     } = req.body;
 
     try {
-        await req.context.userStore.createUser({ email, username, password });
-        res.end();
+        const user = await req.context.userStore.createUser({ email, username, password });
+        res.send(user);
     } catch (e) {
         next(e);
     }
 });
 
-router.post('/user/login', async (req, res, next) => {
-    const {
-        email,
-        username,
-        passwordAttempt
-    } = req.body;
+router.get('/login', (req, res, next) => {
+    res.send('login page')
+})
 
-    try {
-        const success = await req.context.userStore.canAuthenticate({ email, username, passwordAttempt });
-        res.send(success);        
-    } catch (e) {
-        next(e);
-    }
-});
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user) => {
+        if (err) {
+            return next(err);
+        }
+
+        if (!user) {
+            return res.redirect('/login');
+        }
+
+        req.login(user, next);
+        res.redirect('/');
+    })(req, res, next)
+})
 
 export default router;
